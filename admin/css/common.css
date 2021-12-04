@@ -1,0 +1,33 @@
+.bc{
+	background-position:center;
+	background-attachment:fixed; 
+	background-size:100% 100%;  
+	background-image: url("images/a2.jpg");
+	overflow: scroll;
+}
+				
+.panel-transparent {
+		 background: none;
+}
+.panel-transparent1 {
+		 background: none;
+}
+.panel-transparent2 {
+		 background: none;
+}
+				
+.panel-transparent .panel-body{
+					
+	background: rgba(50, 214, 255, 0.8)!important;
+}
+
+.panel-transparent1 .panel-body{
+					
+	background: rgba(240, 255, 240, 0.8)!important;
+}
+
+
+.panel-transparent2 .panel-body{
+					
+	background: rgba(220, 220, 220, 0.8)!important;
+}
