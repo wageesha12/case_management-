@@ -1,60 +1,11 @@
-// DATA_TEMPLATE: js_data
-oTest.fnStart( "Sanity checks for DataTables with data from JS" );
-
-oTest.fnTest( 
-	"jQuery.dataTable function",
-	null,
-	function () { return typeof jQuery().dataTable == "function"; }
-);
-
-oTest.fnTest(
-	"jQuery.dataTableSettings storage array",
-	null,
-	function () { return typeof jQuery().dataTableSettings == "object"; }
-);
-
-oTest.fnTest(
-	"jQuery.dataTableExt plugin object",
-	null,
-	function () { return typeof jQuery().dataTableExt == "object"; }
-);
+// DATA_TEMPLATE: js_data_mixed_types
+oTest.fnStart( "Sanity checks for DataTables with data from JS with mixed data types" );
 
 $(document).ready( function () {
 	var oInit = {
 		"aaData": gaaData
 	};
 	$('#example').dataTable( oInit );
-	
-	/* Basic checks */
-	oTest.fnTest( 
-		"Length changing div exists",
-		null,
-		function () { return document.getElementById('example_length') != null; }
-	);
-	
-	oTest.fnTest( 
-		"Filtering div exists",
-		null,
-		function () { return document.getElementById('example_filter') != null; }
-	);
-	
-	oTest.fnTest( 
-		"Information div exists",
-		null,
-		function () { return document.getElementById('example_info') != null; }
-	);
-	
-	oTest.fnTest( 
-		"Pagination div exists",
-		null,
-		function () { return document.getElementById('example_paginate') != null; }
-	);
-	
-	oTest.fnTest( 
-		"Processing div is off by default",
-		null,
-		function () { return document.getElementById('example_processing') == null; }
-	);
 	
 	oTest.fnTest( 
 		"10 rows shown on the first page",
@@ -65,26 +16,27 @@ $(document).ready( function () {
 	oTest.fnTest( 
 		"Initial sort occured",
 		null,
-		function () { return $('#example tbody td:eq(0)').html() == "Gecko"; }
+		function () { return $('#example tbody tr:eq(0) td:eq(0)').html() == "" &&
+		                     $('#example tbody tr:eq(1) td:eq(0)').html() == "Gecko"; }
 	);
 	
 	/* Need to use the WaitTest for sorting due to the setTimeout datatables uses */
 	oTest.fnTest( 
 		"Sorting (first click) on second column",
 		function () { $('#example thead th:eq(1)').click(); },
-		function () { return $('#example tbody td:eq(1)').html() == "All others"; }
+		function () { return $('#example tbody td:eq(1)').html() == ""; }
 	);
 	
 	oTest.fnTest( 
 		"Sorting (second click) on second column",
 		function () { $('#example thead th:eq(1)').click(); },
-		function () { return $('#example tbody td:eq(1)').html() == "Seamonkey 1.1"; }
+		function () { return $('#example tbody td:eq(1)').html() == "true"; }
 	);
 	
 	oTest.fnTest( 
 		"Sorting (third click) on second column",
 		function () { $('#example thead th:eq(1)').click(); },
-		function () { return $('#example tbody td:eq(1)').html() == "All others"; }
+		function () { return $('#example tbody td:eq(1)').html() == ""; }
 	);
 	
 	oTest.fnTest( 
@@ -105,34 +57,34 @@ $(document).ready( function () {
 			$('#example thead th:eq(0)').click();
 			oDispacher.click( $('#example thead th:eq(1)')[0], { 'shift': true } ); },
 		function () { var b = 
-			$('#example tbody td:eq(0)').html() == "Gecko" && 
-			$('#example tbody td:eq(1)').html() == "Camino 1.0"; return b; }
+			$('#example tbody tr:eq(1) td:eq(0)').html() == "Gecko" && 
+			$('#example tbody tr:eq(1) td:eq(1)').html() == "Camino 1.0"; return b; }
 	);
 	
 	oTest.fnTest( 
 		"Sorting multi-column - sorting second column only",
 		function () { 
 			$('#example thead th:eq(1)').click(); },
-		function () { return $('#example tbody td:eq(1)').html() == "All others"; }
+		function () { return $('#example tbody td:eq(1)').html() == ""; }
 	);
 	
 	/* Basic paging */
 	oTest.fnTest( 
 		"Paging to second page",
 		function () { $('#example_next').click(); },
-		function () { return $('#example tbody td:eq(1)').html() == "IE Mobile"; }
+		function () { return $('#example tbody td:eq(1)').html() == "Firefox 2.0"; }
 	);
 	
 	oTest.fnTest( 
 		"Paging to first page",
 		function () { $('#example_previous').click(); },
-		function () { return $('#example tbody td:eq(1)').html() == "All others"; }
+		function () { return $('#example tbody td:eq(1)').html() == ""; }
 	);
 	
 	oTest.fnTest( 
 		"Attempting to page back beyond the first page",
 		function () { $('#example_previous').click(); },
-		function () { return $('#example tbody td:eq(1)').html() == "All others"; }
+		function () { return $('#example tbody td:eq(1)').html() == ""; }
 	);
 	
 	/* Changing length */
@@ -318,7 +270,7 @@ $(document).ready( function () {
 			oSession.fnRestore();
 			$('#example').dataTable( oInit );
 			$('#example_filter input').val("W").keyup(); },
-		function () { return $('#example tbody tr:eq(0) td:eq(0)').html() == "Gecko"; }
+		function () { return $('#example tbody tr:eq(0) td:eq(0)').html() == ""; }
 	);
 	
 	oTest.fnTest(
@@ -345,7 +297,7 @@ $(document).ready( function () {
 	oTest.fnTest(
 		"Filter 'Win' - sorting column 1",
 		function () { $('#example thead th:eq(1)').click(); },
-		function () { return $('#example tbody tr:eq(0) td:eq(1)').html() == "AOL browser (AOL desktop)"; }
+		function () { return $('#example tbody tr:eq(0) td:eq(1)').html() == ""; }
 	);
 	
 	oTest.fnTest(
@@ -358,7 +310,7 @@ $(document).ready( function () {
 	oTest.fnTest(
 		"Filter 'Win' - sorting column 1 reverse",
 		function () { $('#example thead th:eq(1)').click(); },
-		function () { return $('#example tbody tr:eq(0) td:eq(1)').html() == "Seamonkey 1.1"; }
+		function () { return $('#example tbody tr:eq(0) td:eq(1)').html() == "true"; }
 	);
 	
 	oTest.fnTest(
@@ -370,7 +322,7 @@ $(document).ready( function () {
 	oTest.fnTest(
 		"Filter 'Win XP' - sorting col 3",
 		function () { $('#example thead th:eq(3)').click(); },
-		function () { return $('#example tbody tr:eq(0) td:eq(3)').html() == "4"; }
+		function () { return $('#example tbody tr:eq(0) td:eq(3)').html() == "5"; }
 	);
 	
 	oTest.fnTest(
@@ -383,7 +335,7 @@ $(document).ready( function () {
 		"Filter 'Win' - sorting col 3 - reversed info",
 		null,
 		function () { return document.getElementById('example_info').innerHTML == 
-			"Showing 1 to 6 of 6 entries (filtered from 57 total entries)"; }
+			"Showing 1 to 5 of 5 entries (filtered from 57 total entries)"; }
 	);
 	
 	oTest.fnTest(
