@@ -1,6 +1,8 @@
 # case_management-
 Server- Xampp
 Import lwr.sql to PhpMyAdmin
+Save this repository in htdocs
+
 Please do following configurations of Email Sending funchtion
 
 Php/php.ini :- 
