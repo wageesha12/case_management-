@@ -22,11 +22,11 @@ oTest.fnTest(
 $(document).ready( function () {
 	var oInit = {
 		"aoColumns": [
-			{ "mData": "engine" },
-			{ "mData": "browser" },
-			{ "mData": "platform" },
-			{ "mData": "version" },
-			{ "mData": "grade" }
+			{ "mDataProp": "engine" },
+			{ "mDataProp": "browser" },
+			{ "mDataProp": "platform" },
+			{ "mDataProp": "version" },
+			{ "mDataProp": "grade" }
 		],
 		"aaData": [
 	{
